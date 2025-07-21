@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://lacrei_password@db:5467/lacrei_db
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=lacrei_db
+      - POSTGRES_USER=lacrei_user
+      - POSTGRES_PASSWORD=lacrei_password
+volumes:
+  postgres_data:
+
