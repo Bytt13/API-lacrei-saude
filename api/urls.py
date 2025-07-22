@@ -6,6 +6,6 @@ router = DefaultRouter()
 router.register(r'profissionais', ProfissionalViewSet)
 router.register(r'consultas', ConsultaViewSet)
 
-url_patterns = [
+urlpatterns = [
     path('', include(router.urls)), 
 ]
