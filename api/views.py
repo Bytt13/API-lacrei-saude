@@ -11,9 +11,10 @@ class ProfissionalViewSet(viewsets.ModelViewSet):
 
 class ConsultaViewSet(viewsets.ModelViewSet):
     serializer_class = ConsultaSerializer
+    queryset = Consulta.objects.all()
 
     def get_queryset(self):
-        queryset = Consulta.objects.all()
+        queryset = super().get_queryset()
         profissional_id = self.request.query_params.get('profissional_id')
         if profissional_id:
             queryset = queryset.filter(profissional_id=profissional_id)

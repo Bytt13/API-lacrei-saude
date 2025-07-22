@@ -51,7 +51,7 @@ class ProfissionalTests(APITestCase):
     def test_create_profissional_missing_data(self):
         url = reverse('profissional-list')
         invalid_data = {'nome_social': 'Dr.Fantasma'}
-        response = self.client.get(url, invalid_data, format='json')
+        response = self.client.post(url, invalid_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_retrieve_non_existent_profissional(self):
@@ -76,7 +76,7 @@ class ConsultaTests(APITestCase):
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['profissional'], str(self.profissional.pk))
+        self.assertEqual(str(response.data[0]['profissional']), str(self.profissional.pk))
     
     def test_create_consulta_invalid_profissional(self):
         url = reverse('consulta-list')
