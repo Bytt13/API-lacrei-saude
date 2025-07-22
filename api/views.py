@@ -10,8 +10,14 @@ class ProfissionalViewSet(viewsets.ModelViewSet):
     serializer_class = ProfissionalSerializer
 
 class ConsultaViewSet(viewsets.ModelViewSet):
-    queryset = Consulta.objects.all()
     serializer_class = ConsultaSerializer
+
+    def get_queryset(self):
+        queryset = Consulta.objects.all()
+        profissional_id = self.request.query_params.get('profissional_id')
+        if profissional_id:
+            queryset = queryset.filter(profissional_id=profissional_id)
+        return queryset
 
 # Esta é a ação customizada para buscar consultas de um profissional
 @action(detail=False, methods = ['get'], url_path='por-profisisonal/(?P<profissional_id>[0-9a-f-]+)')
