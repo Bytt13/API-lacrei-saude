@@ -171,18 +171,41 @@ A documentação da API é gerada automaticamente e está disponível de forma i
 Nesta página, você pode visualizar todos os endpoints, modelos de dados e testar as requisições diretamente do seu navegador.
 
 ## 10. Testes Feitos
-Foram feitos no postman, apenas testes com a tabela de profissionais para fins de demonstração, mas os testes da APITestCase cobrem consultas e profissionais
+
 * **API TEST CASE:**
+* 
 <img width="770" height="191" alt="Image" src="https://github.com/user-attachments/assets/521a5810-0f3c-418d-a118-e1820b42684a" />
+
 * **CRIANDO SUPERUSER**
+* 
 <img width="870" height="146" alt="Image" src="https://github.com/user-attachments/assets/c47206e8-6c21-4f28-895d-e2624c74c5f4" />
+
 * **GANHANDO TOKEN:**
+* 
 <img width="964" height="533" alt="Image" src="https://github.com/user-attachments/assets/9c4583a3-f90b-4bc5-8050-8530c11cad43" />
+
 * **CRIANDO PROFISSIONAL:**
+* 
 <img width="641" height="581" alt="Image" src="https://github.com/user-attachments/assets/f435c2f9-4ffd-4e47-be2d-2aa61712068b" />
+
 * **LISTANDO PROFISSIONAIS:**
+* 
 <img width="898" height="801" alt="Image" src="https://github.com/user-attachments/assets/9114bc41-72ce-4a2d-9816-a6a43d96e7e5" />
+
 * **EDITANDO PROFISSIONAL:**
+* 
 <img width="814" height="707" alt="Image" src="https://github.com/user-attachments/assets/c7697aee-ccd6-4654-a519-ba8346497b76" />
+
 * **DELETANDO PROFISSIONAL:**
+* 
 <img width="827" height="500" alt="Image" src="https://github.com/user-attachments/assets/1ce63551-efd0-493c-9729-f29c87edf915" />
+
+* **CRIANDO CONSULTA:**
+* 
+<img width="719" height="636" alt="Image" src="https://github.com/user-attachments/assets/afd35d0a-6edb-48e6-812a-8d6f9ac359a5" />
+
+* **BUSCANDO CONSULTA POR PROFISSIONAL:**
+
+<img width="815" height="651" alt="Image" src="https://github.com/user-attachments/assets/46870488-d9d2-45f0-9b95-bbc8f96f8721" />
+
+<img width="757" height="595" alt="Image" src="https://github.com/user-attachments/assets/ed8aaeb2-db59-409c-a754-403ef1350ab0" />
