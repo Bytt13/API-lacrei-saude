@@ -112,17 +112,17 @@ class ConsultaTests(APITestCase):
         url = reverse("consulta-detail", kwargs={"pk": self.consulta.pk})
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['profissional'], str(self.profissional.pk))
+        self.assertEqual(str(response.data['profissional']), str(self.profissional.pk))
 
     def test_update_consulta(self):
         url = reverse("consulta-detail", kwargs={"pk": self.consulta.pk})
-        nova_data = timezone.now() + timezone.timedelta(days=5)
+        nova_data = (timezone.now() + timezone.timedelta(days=5))
         updated_data = {
             'profissional': str(self.profissional.pk), 'data_consulta': nova_data.isoformat()
         }
         response = self.client.put(url, updated_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.profissional.refresh_from_db()
+        self.consulta.refresh_from_db()
         self.assertEqual(self.consulta.data_consulta.strftime('%Y-%m-%d %H:%M:%S'), nova_data.strftime('%Y-%m-%d %H:%M:%S'))
 
     def test_delete_consulta(self):
