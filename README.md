@@ -27,7 +27,7 @@ A API Lacrei Saúde é uma plataforma para gerenciamento de profissionais de sa�
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <[URL_DO_REPOSITORIO](https://github.com/Bytt13/API-lacrei-saude)>
+    git clone https://github.com/Bytt13/API-lacrei-saude
     cd API-lacrei-saude
     ```
 
@@ -98,7 +98,43 @@ O pipeline de Integração e Entrega Contínua (CI/CD) é gerenciado pelo **GitH
 * **GitHub Actions:** Para automatizar todo o processo de teste e deploy, garantindo entregas rápidas e seguras.
 * **`drf-spectacular`:** Para gerar documentação OpenAPI (Swagger) automaticamente a partir do código, mantendo a documentação sempre atualizada com a API.
 
-## 7. Proposta de Rollback Funcional
+## 7. Justificativa do Modelo de Código e Arquitetura
+
+A estrutura do código foi pensada para seguir as melhores práticas de desenvolvimento com Django, priorizando a clareza, a organização e a facilidade de manutenção. A ideia é que qualquer pessoa desenvolvedora que entre no projeto consiga entender rapidamente como as coisas funcionam.
+
+### 7.1. Padrão Model-View-Serializer (MVS)
+
+O projeto segue o padrão **Model-View-Serializer**, que é a espinha dorsal do Django REST Framework.
+
+* **Model (`models.py`):** É a "planta" dos nossos dados. Ele define, em um só lugar, como um `Profissional` ou uma `Consulta` devem ser, quais campos eles têm e como se relacionam. Isso garante que os dados sejam consistentes e íntegros no banco de dados.
+
+* **Serializer (`serializers.py`):** Funciona como um "tradutor". Ele pega os dados complexos dos nossos `Models` (em Python) e os converte para um formato simples que a internet entende, como o JSON. Ele também faz o caminho inverso: pega um JSON enviado na requisição e o traduz de volta para um objeto que o Django pode salvar no banco de dados. Além disso, é a primeira camada de validação dos dados que chegam na API.
+
+* **View (`views.py`):** É o "cérebro" da operação. A `View` recebe as requisições (GET, POST, PUT, DELETE), usa o `Serializer` para "traduzir" e validar os dados, e conversa com o `Model` para buscar ou salvar informações no banco de dados.
+
+**Analogia:** Pense em um restaurante. O **Model** é a despensa com os ingredientes organizados. O **Serializer** é o chef que sabe quais ingredientes pegar e como prepará-los (o prato final). A **View** é o garçom, que anota o seu pedido (requisição HTTP), leva para o chef e depois te entrega o prato pronto (resposta JSON).
+
+### 7.2. Uso de `ViewSets` e `Routers`
+
+Em vez de criar uma função (ou classe) para cada operação (listar, criar, ver um, atualizar, deletar), utilizamos **`ModelViewSet`**.
+
+* **Por quê?** Para seguir o princípio **DRY (Don't Repeat Yourself - Não se Repita)**. O `ModelViewSet` agrupa toda a lógica CRUD (Create, Retrieve, Update, Delete) para um `Model` em um único lugar. Com poucas linhas de código, temos todos os endpoints necessários para gerenciar um `Profissional` ou uma `Consulta`.
+
+Junto com o `ModelViewSet`, o **`DefaultRouter`** (`urls.py`) trabalha para gerar as URLs da API automaticamente. Não precisamos definir manualmente `GET /profissionais/`, `POST /profissionais/`, `GET /profissionais/{id}/`, etc. O `Router` faz isso por nós, garantindo um padrão de URL consistente em toda a API.
+
+**Benefício:** Isso acelera imensamente o desenvolvimento, reduz a chance de erros e torna a API previsível e fácil de usar.
+
+### 7.3. Separação de Responsabilidades
+
+O projeto é organizado de forma a separar claramente as responsabilidades:
+
+* **App `api`:** Contém toda a lógica de negócio da aplicação (Models, Views, Serializers). Se no futuro precisarmos de um outro app, como um `blog`, ele seria criado separadamente, sem interferir na `api`.
+* **Projeto `lacrei_saude`:** Contém as configurações globais do projeto (`settings.py`) e as definições de URL principais. Ele "orquestra" os diferentes apps.
+* **Configuração de Ambiente (`.env`):** Segredos e configurações que mudam entre ambientes (desenvolvimento, produção) são mantidos em um arquivo `.env` e nunca são enviados para o repositório (`.gitignore`). Isso segue a prática número 3 do **The Twelve-Factor App**, tornando a aplicação mais segura e portável.
+
+Essa estrutura modular torna o projeto mais fácil de navegar, testar e escalar. Se a API crescer, podemos facilmente adicionar novos apps ou quebrar o app `api` em apps menores e mais especializados.
+
+## 8. Proposta de Rollback Funcional
 
 A estratégia de deploy pode ser melhorada para permitir rollbacks mais seguros e rápidos.
 
@@ -114,7 +150,7 @@ O AWS Elastic Beanstalk suporta nativamente o deploy Blue/Green.
 * **Swap de URL:** Com um clique (ou comando de API), o Elastic Beanstalk troca as URLs. O tráfego é instantaneamente redirecionado para o ambiente Green, que se torna o novo Blue.
 * **Rollback Imediato:** Se um problema for detectado, o rollback é feito simplesmente trocando a URL de volta para o ambiente Blue original, que foi mantido intacto. É uma operação quase instantânea e sem risco.
 
-## 8. Proposta de Integração com a Assas
+## 9. Proposta de Integração com a Assas
 
 Para integrar um sistema de pagamentos como o Assas, a arquitetura seria:
 
