@@ -14,7 +14,6 @@ class Command(BaseCommand):
         # Verifica se todas as etiquetas necessárias foram fornecidas
         if not all([username, email, password]):
             self.stdout.write(self.style.ERROR(
-                'As variáveis de ambiente ADMIN_USER, ADMIN_EMAIL e ADMIN_PASSWORD devem ser definidas.'
             ))
             return
 
