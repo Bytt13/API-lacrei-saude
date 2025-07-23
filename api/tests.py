@@ -100,7 +100,7 @@ class ConsultaTests(APITestCase):
 
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Profissional.objects.count(), 2)
+        self.assertEqual(Consulta.objects.count(), 2)
 
     def test_list_conultas(self):
         url = reverse("consulta-list")
@@ -129,7 +129,7 @@ class ConsultaTests(APITestCase):
         url = reverse("consulta-detail", kwargs={"pk": self.consulta.pk})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Profissional.objects.count(), 0)
+        self.assertEqual(Consulta.objects.count(), 0)
 
     def test_get_consultas_por_profissional(self):
         outro_profissional = Profissional.objects.create(
