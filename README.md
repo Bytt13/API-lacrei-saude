@@ -27,7 +27,7 @@ A API Lacrei Saúde é uma plataforma para gerenciamento de profissionais de sa�
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_REPOSITORIO>
+    git clone <[URL_DO_REPOSITORIO](https://github.com/Bytt13/API-lacrei-saude)>
     cd API-lacrei-saude
     ```
 
