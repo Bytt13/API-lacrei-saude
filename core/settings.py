@@ -27,10 +27,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-6!!t!ddb9q-y(4-&#(wj9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
-aws_host = os.environ.get('AWS_HOST')
-if aws_host:
-    ALLOWED_HOSTS.append(aws_host)
+allowed_hosts_str = os.environ.get('AWS_HOST', '')
+ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',') if host.strip()]
 
 # Application definition
 
