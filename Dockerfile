@@ -14,7 +14,7 @@ RUN pip install poetry
 COPY poetry.lock pyproject.toml /code/
 
 # Instalar as dependências do projeto, incluindo gunicorn
-RUN poetry config virtualenvs.create false && poetry install --without dev --no-interaction --no-ansi
+RUN poetry config virtualenvs.create false && poetry install --without dev --no-interaction --no-ansi --no-root
 # Copiar o resto do código do projeto para o diretório de trabalho
 COPY . /code/
 
