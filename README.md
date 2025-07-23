@@ -114,7 +114,7 @@ O AWS Elastic Beanstalk suporta nativamente o deploy Blue/Green.
 * **Swap de URL:** Com um clique (ou comando de API), o Elastic Beanstalk troca as URLs. O tráfego é instantaneamente redirecionado para o ambiente Green, que se torna o novo Blue.
 * **Rollback Imediato:** Se um problema for detectado, o rollback é feito simplesmente trocando a URL de volta para o ambiente Blue original, que foi mantido intacto. É uma operação quase instantânea e sem risco.
 
-## 8. (Bônus) Proposta de Integração com a Assas
+## 8. Proposta de Integração com a Assas
 
 Para integrar um sistema de pagamentos como o Assas, a arquitetura seria:
 
