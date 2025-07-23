@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-6!!t!ddb9q-y(4-&#(wj9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 aws_host = os.environ.get('AWS_HOST')
 if aws_host:
     ALLOWED_HOSTS.append(aws_host)
