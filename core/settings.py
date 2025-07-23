@@ -22,13 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-6!!t!ddb9q-y(4-&#(wj93lmp54asad^izu9(3yc2a^2_f1pl(')
+SECRET_KEY = os.environ.get("SECRET_KEY", "chave-padrao")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-allowed_hosts_str = os.environ.get('AWS_HOST', '')
-ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(',') if host.strip()]
+allowed_hosts_str = os.environ.get("AWS_HOST", "")
+ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_str.split(",") if host.strip()]
 
 # Application definition
 
@@ -38,35 +38,32 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    'corsheaders',
+    "corsheaders",
     "django.contrib.staticfiles",
-    'rest_framework',
-    'api',
-    'rest_framework.authtoken',
-    'drf_spectacular', 
+    "rest_framework",
+    "api",
+    "rest_framework.authtoken",
+    "drf_spectacular",
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
-    ],
-
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Lacrei Saúde API',
-    'DESCRIPTION': 'API para gerenciamento de profissionais e consultas',
-    'VERSION': '1.0.0',
+    "TITLE": "Lacrei Saúde API",
+    "DESCRIPTION": "API para gerenciamento de profissionais e consultas",
+    "VERSION": "1.0.0",
 }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -75,7 +72,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "core.urls"
-#Como nao temos quem pode acessar, definimos por padrao todos
+# Como nao temos quem pode acessar, definimos por padrao todos
 CORS_ALLOW_ALL_ORIGINS = True
 
 TEMPLATES = [
@@ -100,8 +97,8 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3')
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
     )
 }
 
