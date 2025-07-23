@@ -19,3 +19,10 @@ RUN poetry config virtualenvs.create false && poetry install --without dev --no-
 
 #Copiar resto do codigo do projeto
 COPY . /code/
+
+# Informar ao Docker que a nossa aplicação usa a porta 8000
+EXPOSE 8000
+
+# Usamos gunicorn em vez do servidor de desenvolvimento do Django, pois é mais robusto para produção.
+# Primeiro, instale o gunicorn: poetry add gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi"]
