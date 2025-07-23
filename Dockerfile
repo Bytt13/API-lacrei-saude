@@ -1,28 +1,23 @@
-#Imagem do python como base
 FROM python:3.12-slim
 
-#Definir variáveis de ambiente
+# Definir variáveis de ambiente para evitar problemas comuns
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYHTONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
-#Definir diretorio de trabalho
+# Definir o diretório de trabalho dentro do contentor
 WORKDIR /code
 
-#Instalar poetry
+# Instalar o Poetry (gerenciador de dependências)
 RUN pip install poetry
 
-#Copiar arquivos de dependência
+# Copiar os ficheiros de dependência primeiro para aproveitar o cache do Docker
 COPY poetry.lock pyproject.toml /code/
 
-#Instalar dependências do projeto
-RUN poetry config virtualenvs.create false && poetry install --without dev --no-interaction --no-ansi --no-root
+# Instalar as dependências do projeto, incluindo gunicorn
+RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi
 
-#Copiar resto do codigo do projeto
+# Copiar o resto do código do projeto para o diretório de trabalho
 COPY . /code/
 
 # Informar ao Docker que a nossa aplicação usa a porta 8000
 EXPOSE 8000
-
-# Usamos gunicorn em vez do servidor de desenvolvimento do Django, pois é mais robusto para produção.
-# Primeiro, instale o gunicorn: poetry add gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi"]
