@@ -96,13 +96,9 @@ class ConsultaTests(APITestCase):
 
     def test_criar_consulta(self):
         url = reverse("consulta-list")
-        data = {
-            "nome_social": "Dr. House",
-            "profissao": "infectologista",
-            "endereco": "Rua do house, 123",
-            "contato": "123456789",
-        }
-        response = self.client.post(url, data, format="json")
+        data = {'profissional': str(self.profissional.pk), 'data_consulta': (timezone.now() + timezone.timedelta(days=1)).isoformat()}
+
+        response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Profissional.objects.count(), 2)
 
@@ -113,26 +109,24 @@ class ConsultaTests(APITestCase):
         self.assertEqual(len(response.data), 1)
 
     def test_retrieve_consulta(self):
-        url = reverse("consulta-detail", kwargs={"pk": self.profissional.pk})
+        url = reverse("consulta-detail", kwargs={"pk": self.consulta.pk})
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["nome_social"], self.profissional.nome_social)
+        self.assertEqual(response.data['profissional'], str(self.profissional.pk))
 
     def test_update_consulta(self):
-        url = reverse("consulta-detail", kwargs={"pk": self.profissional.pk})
+        url = reverse("consulta-detail", kwargs={"pk": self.consulta.pk})
+        nova_data = timezone.now() + timezone.timedelta(days=5)
         updated_data = {
-            "nome_social": "Dr. House",
-            "profissao": "nefrologista",
-            "endereco": "Rua do house, 123",
-            "contato": "111111111",
+            'profissional': str(self.profissional.pk), 'data_consulta': nova_data.isoformat()
         }
         response = self.client.put(url, updated_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.profissional.refresh_from_db()
-        self.assertEqual(self.profissional.profissao, "nefrologista")
+        self.assertEqual(self.consulta.data_consulta.strftime('%Y-%m-%d %H:%M:%S'), nova_data.strftime('%Y-%m-%d %H:%M:%S'))
 
-    def test_delete_profissional(self):
-        url = reverse("profissional-detail", kwargs={"pk": self.profissional.pk})
+    def test_delete_consulta(self):
+        url = reverse("consulta-detail", kwargs={"pk": self.consulta.pk})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Profissional.objects.count(), 0)
